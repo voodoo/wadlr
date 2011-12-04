@@ -1,0 +1,108 @@
+---
+application:
+  xmlns:xsd: http://www.w3.org/2001/XMLSchema
+  xmlns:yn: urn:yahoo:yn
+  xmlns:ya: urn:yahoo:api
+  xmlns:html: http://www.w3.org/1999/xhtml
+  xmlns: http://research.sun.com/wadl/2006/07
+  grammars:
+    - 
+      include:
+        href: ! 'NewsSearchResponse.xsd'
+    - 
+      include:
+      href:  ! 'NewsSearchError.xsd'
+  resources:
+    base: http://api.search.yahoo.com/NewsSearchService/V1/
+    resource:
+      path: newsSearch
+      doc: ! "\n        The  service provides online searching of news\n        stories
+        from around the world.\n      "
+      param:
+        name: appid
+        type: xsd:string
+        required: 'true'
+        style: form
+        doc: The application ID. See  for more information.
+      method:
+        href: ! '#search'
+  method:
+    name: GET
+    id: search
+    doc:
+      xml:lang: en
+      title: Search news stories by keyword
+    request:
+      param:
+      - name: query
+        type: xsd:string
+        required: 'true'
+        doc:
+          xml:lang: en
+          title: Space separated keywords to search for
+      - name: type
+        type: xsd:string
+        default: all
+        doc:
+          xml:lang: en
+          title: Keyword matching
+        option:
+        - value: all
+          doc: All query terms.
+        - value: any
+          doc: Any query terms.
+        - value: phrase
+          doc: Query terms as a phrase.
+      - name: results
+        type: xsd:int
+        default: '10'
+        doc:
+          xml:lang: en
+          title: Number of results
+      - name: start
+        type: xsd:int
+        default: '1'
+        doc:
+          xml:lang: en
+          title: Index of first result
+      - name: sort
+        type: xsd:string
+        default: rank
+        doc:
+          xml:lang: en
+          title: Sort by date or rank
+        option:
+        - value: rank
+        - value: date
+      - name: language
+        type: xsd:string
+        doc:
+          xml:lang: en
+          title: Language filter, omit for any language
+      - name: output
+        type: xsd:string
+        default: xml
+        doc: The format for the output. If  is requested, the results will be returned
+          in  format. If  is requested, the results will be returned in  format.
+        option:
+        - value: xml
+        - value: json
+        - value: php
+      - name: callback
+        type: xsd:string
+        doc: ! 'The name of the callback function to wrap around the JSON data. The
+          following characters are allowed: A-Z a-z 0-9 . [] and _. If output=json
+          has not been requested, this parameter has no effect. More information on
+          the callback can be found in the .'
+    response:
+      representation:
+        mediaType: application/xml
+        element: yn:ResultSet
+        doc:
+          xml:lang: en
+          title: A list of news items matching the query
+      fault:
+        id: SearchError
+        status: '400'
+        mediaType: application/xml
+        element: ya:Error

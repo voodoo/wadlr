@@ -1,0 +1,8 @@
+method: 
+  name: get
+  path: "account/{number}/summary"
+  request:
+    params:
+      - level  : string
+      - note   : string
+      - number_required : long

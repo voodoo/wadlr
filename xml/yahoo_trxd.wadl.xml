@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <application>
+    <xmlns:xsd>http://www.w3.org/2001/XMLSchema</xmlns:xsd>
+    <xmlns:yn>urn:yahoo:yn</xmlns:yn>
+    <xmlns:ya>urn:yahoo:api</xmlns:ya>
+    <xmlns:html>http://www.w3.org/1999/xhtml</xmlns:html>
+    <xmlns>http://research.sun.com/wadl/2006/07</xmlns>
+    <grammars type="array">
+      <grammar>
+        <include>
+          <href>NewsSearchResponse.xsd</href>
+        </include>
+      </grammar>
+      <grammar>
+        <include nil="true"></include>
+        <href>NewsSearchError.xsd</href>
+      </grammar>
+    </grammars>
+    <resources>
+      <base>http://api.search.yahoo.com/NewsSearchService/V1/</base>
+      <resource>
+        <path>newsSearch</path>
+        <doc>
+        The  service provides online searching of news
+        stories from around the world.
+      </doc>
+        <param>
+          <name>appid</name>
+          <type>xsd:string</type>
+          <required>true</required>
+          <style>form</style>
+          <doc>The application ID. See  for more information.</doc>
+        </param>
+        <method>
+          <href>#search</href>
+        </method>
+      </resource>
+    </resources>
+    <method>
+      <name>GET</name>
+      <id>search</id>
+      <doc>
+        <xml:lang>en</xml:lang>
+        <title>Search news stories by keyword</title>
+      </doc>
+      <request>
+        <param type="array">
+          <param>
+            <name>query</name>
+            <type>xsd:string</type>
+            <required>true</required>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Space separated keywords to search for</title>
+            </doc>
+          </param>
+          <param>
+            <name>type</name>
+            <type>xsd:string</type>
+            <default>all</default>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Keyword matching</title>
+            </doc>
+            <option type="array">
+              <option>
+                <value>all</value>
+                <doc>All query terms.</doc>
+              </option>
+              <option>
+                <value>any</value>
+                <doc>Any query terms.</doc>
+              </option>
+              <option>
+                <value>phrase</value>
+                <doc>Query terms as a phrase.</doc>
+              </option>
+            </option>
+          </param>
+          <param>
+            <name>results</name>
+            <type>xsd:int</type>
+            <default>10</default>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Number of results</title>
+            </doc>
+          </param>
+          <param>
+            <name>start</name>
+            <type>xsd:int</type>
+            <default>1</default>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Index of first result</title>
+            </doc>
+          </param>
+          <param>
+            <name>sort</name>
+            <type>xsd:string</type>
+            <default>rank</default>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Sort by date or rank</title>
+            </doc>
+            <option type="array">
+              <option>
+                <value>rank</value>
+              </option>
+              <option>
+                <value>date</value>
+              </option>
+            </option>
+          </param>
+          <param>
+            <name>language</name>
+            <type>xsd:string</type>
+            <doc>
+              <xml:lang>en</xml:lang>
+              <title>Language filter, omit for any language</title>
+            </doc>
+          </param>
+          <param>
+            <name>output</name>
+            <type>xsd:string</type>
+            <default>xml</default>
+            <doc>The format for the output. If  is requested, the results will be returned in  format. If  is requested, the results will be returned in  format.</doc>
+            <option type="array">
+              <option>
+                <value>xml</value>
+              </option>
+              <option>
+                <value>json</value>
+              </option>
+              <option>
+                <value>php</value>
+              </option>
+            </option>
+          </param>
+          <param>
+            <name>callback</name>
+            <type>xsd:string</type>
+            <doc>The name of the callback function to wrap around the JSON data. The following characters are allowed: A-Z a-z 0-9 . [] and _. If output=json has not been requested, this parameter has no effect. More information on the callback can be found in the .</doc>
+          </param>
+        </param>
+      </request>
+      <response>
+        <representation>
+          <mediaType>application/xml</mediaType>
+          <element>yn:ResultSet</element>
+          <doc>
+            <xml:lang>en</xml:lang>
+            <title>A list of news items matching the query</title>
+          </doc>
+        </representation>
+        <fault>
+          <id>SearchError</id>
+          <status>400</status>
+          <mediaType>application/xml</mediaType>
+          <element>ya:Error</element>
+        </fault>
+      </response>
+    </method>
+  </application>
+</hash>
