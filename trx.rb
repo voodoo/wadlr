@@ -1,12 +1,16 @@
 #!/usr/bin ruby
 
-#require 'yaml'
-require 'active_support/core_ext'
+require 'pp'
+#require 'active_support/core_ext'
+require 'crack'
 
 class YamlToXml
   def self.yaml_to_xml file_to_read, file_to_write
     doc = String.new
-    File.open( file_to_read ) { |yf| doc << YAML.parse( yf ).transform.to_xml }
+    File.open( file_to_read ) do |yf| 
+      trx = YAML.parse( yf ).transform
+      doc << trx.to_s#.to_xml(:root => nil) 
+    end
     File.open( file_to_write, 'w' ) { |f| f.write( doc ) } 
   end
 

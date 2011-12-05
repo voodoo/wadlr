@@ -1,0 +1,28 @@
+Attempts to create a valid wadl file from yml files
+
+Goals: 
+
+* Simplify creation of wadl files via yml and conventions
+* Move back and forth between YML and XML seemlessly
+
+
+Problems:
+
+* Rails active support (or anything else) does not support this natively
+* Attributes get munged into elements
+
+Links:
+http://stufftohelpyouout.blogspot.com/2010/02/hashfromxml-and-multiple-elements-with.html
+
+https://rails.lighthouseapp.com/projects/8994/tickets/1598-preserve-xml-attributes-with-hashfrom_xml-and-activeresource
+
+http://dirk.net/2010/08/05/convert-between-xml-hash-yaml-json-in-ruby-conversion-cheat-sheet/
+
+http://railstips.org/blog/archives/2009/04/01/crack-the-easiest-way-to-parse-xml-and-json/
+
+http://www.slideshare.net/marc.seeger/ruby-xml-mapping-presentation
+
+http://blog.myjacksun.info/2010/11/using-yaml-xml-in-ruby-on-rails.html
+
+
+http://ar.rubyonrails.org/classes/ActiveRecord/Serialization.html#M000052
